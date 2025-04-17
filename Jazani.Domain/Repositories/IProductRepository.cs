@@ -1,10 +1,9 @@
+using Jazani.Domain.Cores;
 using Jazani.Domain.Models;
 
 namespace Jazani.Domain.Repositories;
 
-public interface IProductRepository
+public interface IProductRepository : ICrudRepository<Product, int>
 {
-    Task<IReadOnlyList<Product>> FindAllAsync();
     
-    Task<Product?> FindByIdAsync(int id);
 }
