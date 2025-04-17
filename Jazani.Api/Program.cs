@@ -17,6 +17,7 @@ builder.Services.AddDbContext<InfrastructureDbContext>();
 
 // Domain - Infrastructure
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
 
 
 var app = builder.Build();

@@ -27,11 +27,13 @@ public class InfrastructureDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductConfiguration());
     }
     
     
     
     #region DbSets
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Product> Products { get; set; }
     #endregion
 }
