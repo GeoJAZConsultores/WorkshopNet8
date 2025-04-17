@@ -17,7 +17,7 @@ public class ProductRepository : IProductRepository
     public async Task<IReadOnlyList<Product>> FindAllAsync()
     {
         return await _context.Products
-            // .Include(x => x.Category)
+            .Include(x => x.Category)
             .ToListAsync();
     }
 

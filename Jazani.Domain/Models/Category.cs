@@ -9,6 +9,4 @@ public class Category
     public string Status { get; set; } = default!;
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    
-    public virtual ICollection<Product>? Products { get; set; }
 }

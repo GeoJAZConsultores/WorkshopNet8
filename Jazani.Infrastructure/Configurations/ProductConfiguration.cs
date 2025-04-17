@@ -25,7 +25,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(x => x.UpdatedAt).HasColumnName("updated_at");
 
         builder.HasOne(x => x.Category)
-	        .WithMany(x => x.Products)
+	        .WithMany()
 	        .HasForeignKey(x => x.CategoryId);
 
     }
