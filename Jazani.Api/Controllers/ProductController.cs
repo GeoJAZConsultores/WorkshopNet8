@@ -1,4 +1,4 @@
-using Jazani.Domain.Repositories;
+using Jazani.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jazani.Api.Controllers;
@@ -7,27 +7,27 @@ namespace Jazani.Api.Controllers;
 [ApiController]
 public class ProductController : ControllerBase
 {
-    private readonly IProductRepository _productRepository;
-    
-    public ProductController(IProductRepository productRepository)
+    private readonly IProductService _productService;
+
+    public ProductController(IProductService productService)
     {
-        _productRepository = productRepository;
+        _productService = productService;
     }
-    
+
+
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var products = await _productRepository.FindAllAsync();
-        
+        var products = await _productService.FindAllAsync();
+
         return Ok(products);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        var product = await _productRepository.FindByIdAsync(id);
-        
-        return product == null ? NotFound() : Ok(product);
+        var product = await _productService.FindByIdAsync(id);
+
+        return Ok(product);
     }
-    
 }
