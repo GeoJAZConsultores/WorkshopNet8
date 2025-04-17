@@ -16,13 +16,13 @@ public class ProductRepository : IProductRepository
 
     public async Task<IReadOnlyList<Product>> FindAllAsync()
     {
-        return await _context.Products
+        return await _context.Set<Product>()
             .Include(x => x.Category)
             .ToListAsync();
     }
 
     public async Task<Product?> FindByIdAsync(int id)
     {
-        return await _context.Products.FindAsync(id);
+        return await _context.Set<Product>().FindAsync(id);
     }
 }

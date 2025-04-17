@@ -16,14 +16,14 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<IReadOnlyList<Category>> FindAllAsync()
     {
-        var categories = await _context.Categories.ToListAsync();
+        var categories = await _context.Set<Category>().ToListAsync();
 
         return categories;
     }
 
     public async Task<Category?> FindByIdAsync(int id)
     {
-        var category = await _context.Categories.FindAsync(id);
+        var category = await _context.Set<Category>().FindAsync(id);
         
         return category;
     }

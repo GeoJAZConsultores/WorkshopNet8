@@ -1,39 +1,20 @@
-using Jazani.Domain.Models;
-using Jazani.Infrastructure.Configurations;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Jazani.Infrastructure.Cores.Contexts;
 
 public class InfrastructureDbContext : DbContext
 {
-    private readonly IConfiguration _configuration;
-    
-    public InfrastructureDbContext( IConfiguration configuration)
+    public InfrastructureDbContext(DbContextOptions<InfrastructureDbContext> options) : base(options)
     {
-        _configuration = configuration;
     }
 
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-        
-        optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-        modelBuilder.ApplyConfiguration(new ProductConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
     
-    
-    
-    #region DbSets
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Product> Products { get; set; }
-    #endregion
 }

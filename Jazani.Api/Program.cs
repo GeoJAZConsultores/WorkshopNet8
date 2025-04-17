@@ -1,6 +1,6 @@
-using Jazani.Domain.Repositories;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Jazani.Infrastructure.Cores.Contexts;
-using Jazani.Infrastructure.Persistences;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,12 +12,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-// Add DbContext
-builder.Services.AddDbContext<InfrastructureDbContext>();
+// Infrastructure
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
-// Domain - Infrastructure
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<IProductRepository, ProductRepository>();
+// Autofac
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(options =>
+    {
+        options.RegisterModule(new InfrastructureAutofactModule());
+    });
+
 
 
 var app = builder.Build();
