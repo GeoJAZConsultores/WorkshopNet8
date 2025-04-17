@@ -1,30 +1,13 @@
 using Jazani.Domain.Models;
 using Jazani.Domain.Repositories;
 using Jazani.Infrastructure.Cores.Contexts;
-using Microsoft.EntityFrameworkCore;
+using Jazani.Infrastructure.Cores.Persistences;
 
 namespace Jazani.Infrastructure.Persistences;
 
-public class CategoryRepository : ICategoryRepository
+public class CategoryRepository : CrudRepository<Category, int>, ICategoryRepository
 {
-    private readonly InfrastructureDbContext _context;
-    
-    public CategoryRepository(InfrastructureDbContext context)
+    public CategoryRepository(InfrastructureDbContext context) : base(context)
     {
-        _context = context;
-    }
-
-    public async Task<IReadOnlyList<Category>> FindAllAsync()
-    {
-        var categories = await _context.Set<Category>().ToListAsync();
-
-        return categories;
-    }
-
-    public async Task<Category?> FindByIdAsync(int id)
-    {
-        var category = await _context.Set<Category>().FindAsync(id);
-        
-        return category;
     }
 }

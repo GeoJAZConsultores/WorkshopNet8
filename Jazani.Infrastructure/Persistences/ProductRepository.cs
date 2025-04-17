@@ -1,28 +1,14 @@
 using Jazani.Domain.Models;
 using Jazani.Domain.Repositories;
 using Jazani.Infrastructure.Cores.Contexts;
-using Microsoft.EntityFrameworkCore;
+using Jazani.Infrastructure.Cores.Persistences;
 
 namespace Jazani.Infrastructure.Persistences;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository : CrudRepository<Product, int>, IProductRepository
 {
-    private readonly InfrastructureDbContext _context;
-
-    public ProductRepository(InfrastructureDbContext context)
+    public ProductRepository(InfrastructureDbContext context) : base(context)
     {
-        _context = context;
     }
 
-    public async Task<IReadOnlyList<Product>> FindAllAsync()
-    {
-        return await _context.Set<Product>()
-            .Include(x => x.Category)
-            .ToListAsync();
-    }
-
-    public async Task<Product?> FindByIdAsync(int id)
-    {
-        return await _context.Set<Product>().FindAsync(id);
-    }
 }
